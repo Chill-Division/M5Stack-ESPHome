@@ -17,7 +17,7 @@ light:
     id: "ledstrip1"
 </pre>
 
-Table for your varying lengths:
+Table for the varying lengths according to M5Stack:
 <pre>
 # Length: 10cm
 num_leds: 15
@@ -34,3 +34,7 @@ num_leds: 144
 # Length: 200cm
 num_leds: 288
 </pre>
+
+I found a 1.5A USB wall wort could power an Atom Lite (pin: GPIO26) and do 60 LEDs, but it doesn't sem to max out the brightness.
+
+Stopping at ~30 LEDs off a single Atom seems to be the safest
