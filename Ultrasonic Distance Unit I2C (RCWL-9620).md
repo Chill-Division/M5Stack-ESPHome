@@ -4,7 +4,6 @@ https://shop.m5stack.com/products/ultrasonic-distance-unit-i2c-rcwl-9620?variant
 
 <pre>
 external_components:
-  # use rtttl and dfplayer from ESPHome's dev branch in GitHub
   - source:
       type: git
       url: https://github.com/chill-Division/M5Stack-ESPHome/

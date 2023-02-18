@@ -4,7 +4,6 @@ https://shop.m5stack.com/products/rfid-unit-2-ws1850s?variant=40753463885996
 
 <pre>
 external_components:
-  # use rtttl and dfplayer from ESPHome's dev branch in GitHub
   - source:
       type: git
       url: https://github.com/chill-Division/M5Stack-ESPHome/

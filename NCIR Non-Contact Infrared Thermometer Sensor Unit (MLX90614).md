@@ -18,7 +18,6 @@ esphome:
 Then you can add the main configuration for the unit:
 <pre>
 external_components:
-  # use rtttl and dfplayer from ESPHome's dev branch in GitHub
   - source:
       type: git
       url: https://github.com/chill-Division/M5Stack-ESPHome/
