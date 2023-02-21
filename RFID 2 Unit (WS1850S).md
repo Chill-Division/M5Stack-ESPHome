@@ -28,5 +28,5 @@ mfrc522_i2c:
 binary_sensor:
   - platform: rc522
     uid: 83-08-60-1A
-    name: "NFC Card 1
+    name: "NFC Card 1"
 </pre>
