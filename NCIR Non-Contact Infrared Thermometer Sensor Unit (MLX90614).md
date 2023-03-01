@@ -6,13 +6,10 @@ Under your "esphome" section of your yaml, you'll need to add some additional in
 <pre>
 esphome:
   name: "espatom-ir2"
-  includes:
-    - "mlx90614_sensor.h"
   libraries:
     - SPI
     - Wire
     - adafruit/Adafruit BusIO @ 1.9.6
-    - "Adafruit MLX90614 Library"
 </pre>
 
 Then you can add the main configuration for the unit:
@@ -30,17 +27,13 @@ i2c:
   sda: 26
   scl: 32
 
-sensor:
-  - platform: custom
-    lambda: |-
-      auto mlx90614_sensor = new MLX90614Sensor();
-      App.register_component(mlx90614_sensor);
-      return {mlx90614_sensor->ambient_temperature_sensor, mlx90614_sensor->object_temperature_sensor};
-    sensors:
-      - name: "Ambient Temperature"
-        unit_of_measurement: °C
-        accuracy_decimals: 1
-      - name: "Object Temperature"
-        unit_of_measurement: °C
-        accuracy_decimals: 1
+mlx90614:
+  ambient_temperature: # Ambient temperature
+    name: "Ambient temperature"
+    unit_of_measurement: °C
+    accuracy_decimals: 1
+  object_temperature: # Object temperature
+    name: "Object temperature"
+    unit_of_measurement: °C
+    accuracy_decimals: 1
 </pre>
