@@ -1,4 +1,4 @@
-#include "FS/SPIFFS.h"
+#include "SPIFFS.h"
 
 static const char * TAG ="MLX90640_IMAGE";
 void ThermalImageToWeb(float mlx90640To[],const uint16_t camColors[], float MinTemp, float MaxTemp)

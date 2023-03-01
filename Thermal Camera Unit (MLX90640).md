@@ -10,6 +10,7 @@ esphome:
   libraries:
     - FS
     - Wire
+    - SPIFFS
 </pre>
 
 Then you can add the main configuration for the unit:
@@ -19,7 +20,7 @@ external_components:
       type: git
       url: https://github.com/chill-Division/M5Stack-ESPHome/
       ref: main
-    components: [mlx90640, FS]
+    components: mlx90640
 
 sensor:
 camera_mlx90640:

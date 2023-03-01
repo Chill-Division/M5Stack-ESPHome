@@ -1,6 +1,6 @@
 #include "camera_mlx90640.h"
 #include "mlx90640_image.h"
-#include "FS/SPIFFS.h"
+#include "SPIFFS.h"
 
 
 uint8_t MLX90640_address = 0x33;  // Default 7-bit unshifted address of the
