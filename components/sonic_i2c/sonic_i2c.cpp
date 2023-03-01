@@ -1,7 +1,7 @@
 #include"sonic_i2c.h"
 
 namespace esphome{
-static const char * TAG = "SONIC SENSOR" ;
+static const char * TAG = "sonic_i2c" ;
 //static SONIC_I2C sensor ;
 namespace sonic_i2c_sensor{
 
