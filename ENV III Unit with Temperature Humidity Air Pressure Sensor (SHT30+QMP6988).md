@@ -12,7 +12,7 @@ i2c:
   id: bus_1
 
 #ENV.III
-#sensor:
+sensor:
   - platform: sht3xd
     temperature:
       name: "Temperature - SHT30"
