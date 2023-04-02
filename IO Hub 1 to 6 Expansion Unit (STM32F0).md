@@ -39,21 +39,20 @@ m5stack_pbhub:
 # Link the m5stack_pbhub to a switch 
 switch:
   - platform: gpio
-    name: "Light on PBHUB Channel #0 pin #0"
+    name: "Res1 Core"
     pin:
       m5stack_pbhub: M5Stack_HUB
-      # Use pin number 0
+      # Use channel 0, pin number 0
       number: 00
       mode:
         output: true
       inverted: false
-      
   - platform: gpio
-    name: "Pumps on PBHUB Channel #0 pin #1"
+    name: "Res1 Grow"
     pin:
       m5stack_pbhub: M5Stack_HUB
-      # Use pin number 1
-      number: 01
+      # Use channel 1, pin number 0
+      number: 10
       mode:
         output: true
       inverted: false
@@ -64,7 +63,7 @@ binary_sensor:
     name: "Dual Button on PBHUB Channel #2 Pin #0"
     pin:
       m5stack_pbhub: M5Stack_HUB
-      # Use pin number 0
+      # Use channel 2, pin number 0
       number: 20
       mode:
         output: true
@@ -73,7 +72,7 @@ binary_sensor:
     name: "Dual Button on PBHUB Channel #2 Pin #1"
     pin:
       m5stack_pbhub: M5Stack_HUB
-      # Use pin number 1
+      #Use channel 2, pin number 1
       number: 21
       mode:
         output: true
