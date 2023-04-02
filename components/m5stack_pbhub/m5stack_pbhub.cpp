@@ -48,17 +48,33 @@ bool M5StackPBHUBComponent::digital_read(uint8_t pin) {
   
 }
 void M5StackPBHUBComponent::digital_write(uint8_t pin, bool value) {
-  uint8_t val = value?0xFF: 0 ;
-  if (pin==0){
+  //ESP_LOGCONFIG(TAG, "PIN : %d ", pin) ;
+  uint8_t val = value? 0xFF: 0 ;
+  /*if (pin==0){
     portHub->hub_d_wire_value_B(HUB_ADDR[pin],val);
+    return ;
   }else if(pin==1){
-   portHub->hub_d_wire_value_A(HUB_ADDR[pin],val);
-  }
-  uint8_t pin2 = pin /10 ;
+   portHub->hub_d_wire_value_A(HUB_ADDR[0],val);
+   return ;
+  }/*
+if (pin==10){
+    portHub->hub_d_wire_value_B(HUB_ADDR[1],val);
+    return ;
+  }else if(pin==11){
+   portHub->hub_d_wire_value_A(HUB_ADDR[1],val);
+   return ;
+  }*/
+
+  uint8_t channel = pin /10 ;
+  //ESP_LOGCONFIG(TAG, "PIN : %d ; channel : %d", pin, channel) ;
   if(pin%2==0){
-   portHub->hub_d_wire_value_B(HUB_ADDR[pin],val);
+   portHub->hub_d_wire_value_B(HUB_ADDR[channel],val);
+   return;
+  }else{
+    portHub->hub_d_wire_value_A(HUB_ADDR[channel],val);
+    return;
   }
-  portHub->hub_d_wire_value_A(HUB_ADDR[pin],val);
+  
 }
 void M5StackPBHUBComponent::pin_mode(uint8_t pin, gpio::Flags flags) {
  // No pin mode configuration required
