@@ -2,6 +2,8 @@
 
 https://shop.m5stack.com/products/i-o-hub-1-to-6-expansion-unit-stm32f0
 
+NOTE: At present only seems to work on the Atom Lite, not the PoESP32 for reasons unknown that we haven't had time to troubleshoot
+
 PbHUB Unit is a 6-channel expansion Unit with I2C control. Each Port B interface is capable of GPIO, PWM, Servo control, ADC sampling, RGB light control and other functions. Adopts STM32F030 for internal control.
 ![image](https://user-images.githubusercontent.com/162461/226787771-71f4fde0-d306-4885-8c91-d4b4156db560.png)
 
