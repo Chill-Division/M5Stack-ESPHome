@@ -44,7 +44,7 @@ void SonicI2C::update() {
     {
             ESP_LOGI(TAG, "Incorrect Distance Reading");
          }else{
-            ESP_LOGD(TAG, "'%s' - Got distance: %.2f m", this->name_.c_str(), result);
+            ESP_LOGD(TAG, "'%s' - Got distance: %.2f mm", this->name_.c_str(), result);
            
       }
     
