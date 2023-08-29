@@ -6,6 +6,8 @@ We take a rolling average of the last 60s particulate matter readings and update
 
 ![image](https://github.com/Chill-Division/M5Stack-ESPHome/assets/162461/8e2ebe1a-d089-4055-9f8b-a91212942f83)
 
+NOTE: If you try enabling bluetooth_proxy on this then the WiFi will stop working. If you're having troubles with getting it online, try removing that.
+
 <pre>
 uart:
   rx_pin: 16
