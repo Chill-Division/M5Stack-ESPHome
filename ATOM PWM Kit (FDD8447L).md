@@ -9,7 +9,7 @@ output:
     pin: GPIO22
     frequency: 1000 hz
     id: pwm_outputg22
-    inverted: false
+    inverted: true
 
 light:
   - platform: monochromatic
