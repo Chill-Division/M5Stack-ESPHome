@@ -2,6 +2,8 @@
 
 https://shop.m5stack.com/products/ultrasonic-distance-unit-i2c-rcwl-9620?variant=42084188225793
 
+<b>NOTE:</b> This only works with the I2C unit. The GPIO unit doesn't play nice with ESPHome (I had to install Tasmota instead), so be sure to get the I2C variant which will also then work with the Pa.hub
+
 <pre>
 external_components:
   - source:
