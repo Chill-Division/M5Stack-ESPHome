@@ -1,4 +1,5 @@
 #include"sonic_i2c.h"
+#include"esphome/core/log.h"
 
 namespace esphome{
 static const char * TAG = "sonic_i2c" ;
@@ -6,7 +7,8 @@ static const char * TAG = "sonic_i2c" ;
 namespace sonic_i2c_sensor{
 
 void SonicI2C::dump_config() {
-  LOG_SENSOR("", "Ultrasonic Sensor", this);
+  LOG_SENSOR(TAG, "Ultrasonic Sensor", this);
+  ESP_LOGD(TAG , "Ultrasonic Sensor I2C Address :  %x", this->address_);
   LOG_UPDATE_INTERVAL(this);
 }
 
@@ -32,7 +34,7 @@ float SonicI2C::getDistance(){
 
 void SonicI2C::setup(){
     // Init the sensor 
-    ESP_LOGI(TAG, "Sonic Sensor Setup begin");
+    ESP_LOGI(TAG, "Ultrasonic Sensor Setup begin");
     
 }
 
@@ -44,7 +46,7 @@ void SonicI2C::update() {
     {
             ESP_LOGI(TAG, "Incorrect Distance Reading");
          }else{
-            ESP_LOGD(TAG, "'%s' - Got distance: %.2f mm", this->name_.c_str(), result);
+            ESP_LOGD(TAG, "%s - Got distance: %.2f mm", this->name_.c_str(), result);
            
       }
     
