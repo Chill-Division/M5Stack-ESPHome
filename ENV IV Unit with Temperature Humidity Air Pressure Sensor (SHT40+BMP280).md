@@ -5,6 +5,12 @@ https://shop.m5stack.com/products/env-iv-unit-with-temperature-humidity-air-pres
 <b>NOTE:</b> There seems to be approx an 0.5° C difference between the SHT40 and BMP280 temperature sensors. Adjust offsets accordingly.
 
 <pre>
+i2c:
+  sda: 26
+  scl: 32
+  scan: true
+  id: bus_1
+
 sensor:
   - platform: sht4x
     temperature:
