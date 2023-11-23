@@ -22,6 +22,10 @@ external_components:
       ref: main
     components: camera_mlx90640
 
+# This is neccessary to load the text_sensor library, can be left empty though
+text_sensor:
+
+# The Thermal Camera sensor itself
 sensor:
 camera_mlx90640:
   id: thermal_cam
