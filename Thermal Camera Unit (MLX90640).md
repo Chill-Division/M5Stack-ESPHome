@@ -49,3 +49,10 @@ camera_mlx90640:
 web_server:
   port: 80
 </pre>
+
+You can also browse to the device with the URL:
+<pre>/thermal-camera</pre>
+It will draw a bmp image (You'll need to zoom right in) of the heatmap the camera can see:
+![image](https://github.com/Chill-Division/M5Stack-ESPHome/assets/162461/8b2eca54-a286-4f0d-8359-084e0a500b2d)
+
+Note: This is a BMP image if you save it directly
