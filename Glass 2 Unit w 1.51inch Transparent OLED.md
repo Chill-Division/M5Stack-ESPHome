@@ -18,7 +18,7 @@ font:
 display:
   - platform: ssd1306_i2c
     model: "SSD1306 128x64"
-    address: 0x3D
+    address: 0x3C
     lambda: |-
       it.print(0, 0, id(font_m5stack_atom_echo_80313c), "Hello");
       it.print(0, 20, id(font_m5stack_atom_echo_80313c), "World!");
