@@ -11,7 +11,7 @@ id: bus_1
 
 font:
   - file: "gfonts://Roboto@medium"
-    id: font_m5stack_atom_echo_80313c
+    id: roboto_font
     size: 18
     glyphs: '!"%()+,-_.:°0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ abcdefghijklmnopqrstuvwxyz/³µ'
 
@@ -20,6 +20,6 @@ display:
     model: "SSD1306 128x64"
     address: 0x3C
     lambda: |-
-      it.print(0, 0, id(font_m5stack_atom_echo_80313c), "Hello");
-      it.print(0, 20, id(font_m5stack_atom_echo_80313c), "World!");
+      it.print(0, 0, id(roboto_font), "Hello");
+      it.print(0, 20, id(roboto_font), "World!");
 </pre>
