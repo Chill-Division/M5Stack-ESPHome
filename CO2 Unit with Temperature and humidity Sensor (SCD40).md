@@ -12,6 +12,7 @@ i2c:
 sensor:
   - platform: scd4x
     id: scd40
+    automatic_self_calibration: False
     co2:
       name: "Server rack CO2"
       accuracy_decimals: 1
