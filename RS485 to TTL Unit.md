@@ -5,6 +5,19 @@ https://shop.m5stack.com/products/rs485-module
 This example includes sensor details for a [THC-S Soil Moisture, Temperature and Conductivity Sensor](https://www.aliexpress.com/item/1005001524845572.html?spm=a2g0o.order_list.order_list_main.5.6a5e1802E8jtxz) as a demonstration of how to connect the device
 
 <pre>
+esphome:
+  name: m5stack-poesp32-02
+  libraries:
+    - Wire
+    - EspSoftwareSerial@8.1.0
+    
+external_components:
+  - source: 
+      type: local
+      path: components
+    components: [tdr_soil_sensor3]  
+</pre>
+<pre>
 ### RS485
 uart:
   id: modbus_serial
