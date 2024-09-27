@@ -4,6 +4,11 @@ https://shop.m5stack.com/products/env-pro-unit-with-temperature-humidity-pressur
 
 Thanks to DavidGeorge528 for their assistance with this sensor / config
 
+Example sensor output:
+
+![image](https://github.com/user-attachments/assets/f837c41e-dc31-48cc-a742-28e1b3a8c290)
+
+
 <pre>
 i2c:
   sda: 16
