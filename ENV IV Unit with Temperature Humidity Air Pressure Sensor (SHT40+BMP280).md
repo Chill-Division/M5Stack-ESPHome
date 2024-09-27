@@ -21,7 +21,7 @@ sensor:
       id: "humidity_sht40"
     address: 0x44
     update_interval: 10s
-  - platform: bmp280
+  - platform: bmp280_i2c
     temperature:
       name: "Temperature - BMP280"
       id: "temperature_bmp280"
