@@ -14,14 +14,30 @@ sensor:
     id: scd40
     automatic_self_calibration: False
     co2:
-      name: "Server rack CO2"
+      name: "CO2"
+      id: co2
       accuracy_decimals: 1
     temperature:
-      name: "Server rack Temperature"
+      name: "Temperature"
+      id: temperature
       accuracy_decimals: 2
     humidity:
-      name: "Server rack Humidity"
+      name: "Humidity"
+      id: humidity
       accuracy_decimals: 1
     address: 0x62
     update_interval: 10s
+  - platform: template
+    name: "VPD"
+    icon: "mdi:gauge"
+    id: gr2_ace_vpd
+    lambda: |-
+          return (((100 - id(humidity).state) / 100) * (0.6108 * 2.718281828459045 * (17.27 * ((id(temperature).state)) / (((id(temperature).state)) + 237.3))));
+    update_interval: 10s
+    unit_of_measurement: kPa
+    accuracy_decimals: 2
+    filters:
+      - filter_out: nan
+  - platform: uptime
+    name: Uptime
 </pre>
