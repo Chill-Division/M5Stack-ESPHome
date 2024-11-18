@@ -12,5 +12,5 @@ These vary between the PoESP32 and the Atom Lite. Take note before copy / pastin
 M5StampS3 Breakout board:
 | Color | J1 - GPIO | J2 - GPIO | J3 - X | J4 - SDA/SCL | J5 - GPIO | J6 - GPIO |
 | ------------- | ------------- | ------------- | ------------- | ------------- | ------------ | ------------- |
-| Yellow  | G1 | G3 | G13 | G7 | G5 | G11 |
-| White  | G2 | G4 | G15 | G9 | G6 | G10 |
+| Yellow  | G2 | G3 | G13 | G7 | G5 | G11 |
+| White  | G1 | G4 | G15 | G9 | G6 | G10 |
