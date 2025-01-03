@@ -15,7 +15,7 @@ namespace esphome {
          //class MLXDriver ;
          //class MLXApi ;
 
-         class MLX90640: public PollingComponent {
+         class MLX90640 : public PollingComponent, public sensor::Sensor {
               private:
                 TwoWire *wire ;
                 uint8_t addr_ ;
@@ -33,6 +33,10 @@ namespace esphome {
                 sensor::Sensor *median_temperature_sensor_{nullptr};
                 //sensor::Sensor *min_index ;
                 // sensor::Sensor *max_index ;
+                i2c::I2CDevice *i2c_device_{nullptr};
+
+              public:
+                void set_i2c_id(i2c::I2CDevice *i2c_device) { this->i2c_device_ = i2c_device; }
               public:
                 MLX90640(web_server_base::WebServerBase *base);
                float get_setup_priority() const override { return setup_priority::LATE; }
