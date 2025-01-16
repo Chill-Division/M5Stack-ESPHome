@@ -20,6 +20,7 @@ logger:
 
 # Keep this, coz you can't flash shit remotely without it
 ota:
+  platform: esphome
 
 # Network interface for PoESP32
 ethernet:
