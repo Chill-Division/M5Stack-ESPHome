@@ -48,6 +48,7 @@ sensor:
     sensors:
       - index: 3
         name: pwEC
+        icon: mdi:electron-framework
         accuracy_decimals: 2
         unit_of_measurement: 'EC (ppm500)'
         filters:
