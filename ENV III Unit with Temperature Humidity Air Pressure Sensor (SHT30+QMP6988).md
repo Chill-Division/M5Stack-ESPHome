@@ -16,8 +16,10 @@ sensor:
   - platform: sht3xd
     temperature:
       name: "Temperature - SHT30"
+      id: temperature
     humidity:
       name: "Humidity"
+      id: humidity
     address: 0x44
     update_interval: 10s
   - platform: qmp6988
@@ -30,4 +32,15 @@ sensor:
     address: 0x70
     update_interval: 10s
     iir_filter: 2x
+  - platform: template
+    name: "VPD"
+    icon: "mdi:gauge"
+    id: gr2_ace_vpd
+    lambda: |-
+          return (((100 - id(humidity).state) / 100.0) * (0.6108 * exp((17.27 * id(temperature).state) / (id(temperature).state + 237.3))));
+    update_interval: 10s
+    unit_of_measurement: kPa
+    accuracy_decimals: 2
+    filters:
+      - filter_out: nan
 </pre>
