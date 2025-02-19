@@ -31,4 +31,15 @@ sensor:
       id: "pressure_bmp280"
     address: 0x76
     update_interval: 10s
+  - platform: template
+    name: "VPD"
+    icon: "mdi:gauge"
+    id: gr2_ace_vpd
+    lambda: |-
+          return (((100 - id(humidity_sht40).state) / 100.0) * (0.6108 * exp((17.27 * id(temperature_sht40).state) / (id(temperature_sht40).state + 237.3))));
+    update_interval: 10s
+    unit_of_measurement: kPa
+    accuracy_decimals: 2
+    filters:
+      - filter_out: nan
 </pre>
