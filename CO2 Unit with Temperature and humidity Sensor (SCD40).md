@@ -32,7 +32,7 @@ sensor:
     icon: "mdi:gauge"
     id: gr2_ace_vpd
     lambda: |-
-          return (((100 - id(humidity).state) / 100) * (0.6108 * 2.718281828459045 * (17.27 * ((id(temperature).state)) / (((id(temperature).state)) + 237.3))));
+          return (((100 - id(humidity).state) / 100.0) * (0.6108 * exp((17.27 * id(temperature).state) / (id(temperature).state + 237.3))));
     update_interval: 10s
     unit_of_measurement: kPa
     accuracy_decimals: 2
