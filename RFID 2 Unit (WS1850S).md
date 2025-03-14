@@ -3,23 +3,13 @@
 https://shop.m5stack.com/products/rfid-unit-2-ws1850s?variant=40753463885996
 
 <pre>
-external_components:
-  - source:
-      type: git
-      url: https://github.com/chill-Division/M5Stack-ESPHome/
-      ref: main
-    components: mfrc522_i2c
 
 i2c:
-  sda: 16
-  scl: 17
-  scan: true
-  id: bus_1
+  sda: GPIOx
+  scl: GPIOy
 
-mfrc522_i2c:
-  i2c_id: bus_1
-  address: 0x28 # I2C adress 
-  update_interval: 200ms # It seems happiest with 200ms minimum
+rc522_i2c:
+  address: 0x28
   on_tag:
     then:
       - homeassistant.tag_scanned: !lambda 'return x;'
