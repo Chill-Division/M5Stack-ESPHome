@@ -8,6 +8,8 @@ This unit is perfect for connecting an SDI-12 substrate sensor such as the BGT-S
 
 For the BGT-SEC(Z2), the unshielded cable is ground, white is power (3.6-16v DC) and the red cable is signal.
 
+There are two parts, the first is replacing the esp32 part and adding the external components. **NOTE:** You _must_ be running the esp-idf framework or the sensor won't give any readings.
+
 <pre>
 esp32:
   board: m5stack-core-esp32
@@ -20,7 +22,10 @@ external_components:
   - source: github://ssieb/esphome_components@sdi12
     components: [ sdi12 ]
     refresh: 1min
+</pre>
 
+The second part is the half-duplex UART and SDI12 implementation:
+<pre>
 uart:
   - id: sdi12uart
     tx_pin:
