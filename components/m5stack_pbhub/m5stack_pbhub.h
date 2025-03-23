@@ -57,6 +57,8 @@ class PBHUBGPIOPin : public GPIOPin {
   void set_inverted(bool inverted) { inverted_ = inverted; }
   void set_flags(gpio::Flags flags) { flags_ = flags; }
 
+  gpio::Flags get_flags() const override { return this->flags_; }
+
  protected:
   M5StackPBHUBComponent *parent_;
   uint8_t pin_;
