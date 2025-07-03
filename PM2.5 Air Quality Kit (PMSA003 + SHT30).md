@@ -128,6 +128,7 @@ light:
     
 display:
   - platform: ili9xxx
+    invert_colors: false
     id: m5stack_display
     model: M5Stack
     cs_pin: 14
