@@ -30,7 +30,7 @@ sensor:
   - platform: template
     name: "VPD"
     icon: "mdi:gauge"
-    id: gr2_ace_vpd
+    id: vpd
     lambda: |-
           return (((100 - id(humidity).state) / 100.0) * (0.6108 * exp((17.27 * id(temperature).state) / (id(temperature).state + 237.3))));
     update_interval: 10s
