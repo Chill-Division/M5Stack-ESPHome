@@ -23,3 +23,15 @@ light:
     rgb_order: GRB
     name: "RedKeyboardButton1-Light"
     </pre>
+
+To make this work with the esp-idf framework, you need a slightly different light configuration. This was required for use with the Nabu Casa VoicePE:
+<pre>
+# LED under the key
+light:
+  - platform: esp32_rmt_led_strip
+    chipset: SK6812
+    pin: 1
+    num_leds: 1
+    rgb_order: GRB
+    name: "RedKeyboardButton1-Light"
+</pre>
