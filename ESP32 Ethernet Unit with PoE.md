@@ -27,9 +27,12 @@ ethernet:
   type: IP101
   mdc_pin: GPIO23
   mdio_pin: GPIO18
-  clk_mode: GPIO0_IN
   phy_addr: 1
-  power_pin: GPIO5
+  power_pin:
+    number: GPIO5
+  clk:
+    pin: GPIO0
+    mode: CLK_EXT_IN
 
 # Enable Home Assistant API
 api:
