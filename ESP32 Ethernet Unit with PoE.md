@@ -30,9 +30,12 @@ ethernet:
   phy_addr: 1
   power_pin:
     number: GPIO5
-  clk:
-    pin: GPIO0
-    mode: CLK_EXT_IN
+    ignore_strapping_warning: true
+clk:
+  pin:
+    number: GPIO0
+    ignore_strapping_warning: true
+  mode: CLK_EXT_IN
 
 # Enable Home Assistant API
 api:
