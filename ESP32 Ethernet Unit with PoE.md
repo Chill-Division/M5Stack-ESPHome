@@ -31,11 +31,11 @@ ethernet:
   power_pin:
     number: GPIO5
     ignore_strapping_warning: true
-clk:
-  pin:
-    number: GPIO0
-    ignore_strapping_warning: true
-  mode: CLK_EXT_IN
+  clk:
+    pin:
+      number: GPIO0
+      ignore_strapping_warning: true
+    mode: CLK_EXT_IN
 
 # Enable Home Assistant API
 api:
