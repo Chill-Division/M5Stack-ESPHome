@@ -10,7 +10,7 @@ If in doubt, or for troubleshooting purposes, set the num_leds: 2
 
 <pre>
 light:
-  - platform: fastled_clockless
+  - platform: esp32_rmt_led_strip
     chipset: SK6812
     pin: GPIO16
     num_leds: 30
