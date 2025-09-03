@@ -5,12 +5,12 @@ https://shop.m5stack.com/products/ir-unit
 <pre>
 remote_receiver:
   pin:
-    number: GPIO32
+    number: GPIO32 # White cable on Atom Lite
     inverted: true
   dump: all
 
 remote_transmitter:
-  pin: GPIO26
+  pin: GPIO26 # Yellow cable on Atom Lite
   carrier_duty_percent: 50%
 
 climate:
