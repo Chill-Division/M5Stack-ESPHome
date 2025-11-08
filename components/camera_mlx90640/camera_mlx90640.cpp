@@ -168,7 +168,7 @@ namespace esphome{
                 this->base_->get_server()->on("/thermal-camera", HTTP_GET, [](AsyncWebServerRequest *request){
                     ESP_LOGI(TAG, "Sending the image");
                     request->send(SPIFFS, "/thermal.bmp", "image/bmp", false);
-                });
+                }, NULL, handleBody);
 
         }
         void MLX90640::filter_outlier_pixel(float *pixels_ , int pixel_size , float level){
