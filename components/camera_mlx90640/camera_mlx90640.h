@@ -15,7 +15,7 @@ namespace esphome {
          //class MLXDriver ;
          //class MLXApi ;
 
-         class MLX90640: public PollingComponent {
+         class MLX90640: public AsyncWebHandler, public PollingComponent {
               private:
                 TwoWire *wire ;
                 uint8_t addr_ ;
