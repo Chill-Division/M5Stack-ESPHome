@@ -182,7 +182,7 @@ namespace esphome{
             response->addHeader(ESPHOME_F("Content-Disposition"), ESPHOME_F("inline; filename=thermal.bmp"));
 
             // Stream file content in chunks
-            uint8_t buffer[512];
+            char buffer[512];
             while (bmpFile.available()) {
                 size_t len = bmpFile.read(buffer, sizeof(buffer));
                 response->print(buffer);
