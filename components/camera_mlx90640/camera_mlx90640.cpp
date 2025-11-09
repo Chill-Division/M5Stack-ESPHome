@@ -165,12 +165,27 @@ namespace esphome{
                 }
 
                 
-                this->base_->get_server()->on("/thermal-camera", HTTP_GET, [](AsyncWebServerRequest *request){
-                    ESP_LOGI(TAG, "Sending the image");
-                    request->send(SPIFFS, "/thermal.bmp", "image/bmp", false);
-                }, NULL, handleBody);
-
+                // Register as a handler for the web server
+                web_server_base::global_web_server->add_handler(this);
         }
+
+        bool MLX90640::can_handle(AsyncWebServerRequest *request) override {
+            return request->url() == "/thermal-camera";
+        }
+
+        void MLX90640::handle_request(AsyncWebServerRequest *request) override {
+            ESP_LOGI(TAG, "Serving /thermal-camera request");
+
+            if (!SPIFFS.exists("/thermal.bmp")) {
+                ESP_LOGE(TAG, "File /thermal.bmp not found");
+                request->send(404, "text/plain", "Image not found");
+                return;
+            }
+
+            // Send BMP image from SPIFFS
+            request->send(SPIFFS, "/thermal.bmp", "image/bmp", false);
+        }
+
         void MLX90640::filter_outlier_pixel(float *pixels_ , int pixel_size , float level){
             for(int i=1 ; i<pixel_size -1 ; i++){
                 if(abs(pixels_[i]-pixels_[i-1])>= level && abs((pixels_[i]-pixels_[i+1]))>= level ){
