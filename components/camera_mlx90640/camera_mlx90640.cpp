@@ -169,7 +169,7 @@ namespace esphome{
                 this->base_->add_handler(this);
         }
 
-        void MLX90640::handleRequest(AsyncWebServerRequest *req) {
+        void MLX90640::handle_request(AsyncWebServerRequest *req) {
             if (req->url() != ESPHOME_F("/thermal-camera")) {
                 return;
             }
