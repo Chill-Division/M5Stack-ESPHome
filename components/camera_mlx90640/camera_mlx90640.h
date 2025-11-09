@@ -37,7 +37,7 @@ namespace esphome {
                 MLX90640(web_server_base::WebServerBase *base);
                 float get_setup_priority() const override { return setup_priority::LATE; }
                 void setup() override ;
-                bool canHandle(AsyncWebServerRequest *request) const override { return request->url() == "/thermal-camera"; }
+                bool canHandle(AsyncWebServerRequest *request) const override { return request->url() == ESPHOME_F("/thermal-camera") && request->method() == HTTP_GET; }
                 void handleRequest(AsyncWebServerRequest *req) override ;
                 void update() override ;
                 void create_image();

@@ -170,18 +170,30 @@ namespace esphome{
         }
 
         void MLX90640::handleRequest(AsyncWebServerRequest *req) {
-            if (req->url() != ESPHOME_F("/thermal-camera")) {
+            File bmpFile = SPIFFS.open("/thermal.bmp", "r");
+            if (!bmpFile) {
+                ESP_LOGE("thermal_bmp", "File not found: /thermal.bmp");
+                request->send(404, "text/plain", "File not found");
                 return;
             }
 
-            const char *msg = "Success!";
-#ifndef USE_ESP8266
-            auto *response = req->beginResponse(200, "text/plain", msg);
-#else
-            auto *response = req->beginResponse_P(200, "text/plain", msg);
-#endif
-            response->addHeader(ESPHOME_F("Content-Encoding"), ESPHOME_F("gzip"));
-            req->send(response);
+            // Create async stream response
+            AsyncResponseStream *response = request->beginResponseStream("image/bmp");
+            response->addHeader("Content-Disposition", "inline; filename=thermal.bmp");
+
+            // Optional: send content length if you want (some clients prefer it)
+            size_t fileSize = bmpFile.size();
+            response->addHeader("Content-Length", String(fileSize));
+
+            // Stream file content in chunks
+            uint8_t buffer[512];
+            while (bmpFile.available()) {
+                size_t len = bmpFile.read(buffer, sizeof(buffer));
+                response->write(buffer, len);
+            }
+
+            bmpFile.close();
+            request->send(response);
         }
 
         void MLX90640::filter_outlier_pixel(float *pixels_ , int pixel_size , float level){
