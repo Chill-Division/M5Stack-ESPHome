@@ -182,7 +182,7 @@ namespace esphome{
             if (bmpFile.available()) {
                 size_t len = bmpFile.read(buffer, sizeof(buffer));
             }
-            AsyncResponseStream *response = req->beginResponse(200, ESPHOME_F("image/bmp"), buffer, len);
+            auto *response = req->beginResponse(200, ESPHOME_F("image/bmp"), buffer, len);
             response->addHeader(ESPHOME_F("Content-Disposition"), ESPHOME_F("inline; filename=thermal.bmp"));
 
             bmpFile.close();
