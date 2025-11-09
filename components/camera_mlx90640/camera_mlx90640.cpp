@@ -177,16 +177,13 @@ namespace esphome{
                 return;
             }
 
-            // Create async stream response
-            AsyncResponseStream *response = req->beginResponseStream(ESPHOME_F("image/bmp"));
-            response->addHeader(ESPHOME_F("Content-Disposition"), ESPHOME_F("inline; filename=thermal.bmp"));
-
-            // Stream file content in chunks
-            uint8_t buffer[512];
-            while (bmpFile.available()) {
+            uint8_t buffer[bmpFile.size()];
+            size_t len = sizeof(buffer);
+            if (bmpFile.available()) {
                 size_t len = bmpFile.read(buffer, sizeof(buffer));
-                response->print((char*)buffer);
             }
+            AsyncResponseStream *response = req->beginResponse(200, ESPHOME_F("image/bmp"), buffer, len);
+            response->addHeader(ESPHOME_F("Content-Disposition"), ESPHOME_F("inline; filename=thermal.bmp"));
 
             bmpFile.close();
             req->send(response);
