@@ -185,7 +185,7 @@ namespace esphome{
             uint8_t buffer[512];
             while (bmpFile.available()) {
                 size_t len = bmpFile.read(buffer, sizeof(buffer));
-                response->print(buffer, len);
+                response->print(buffer);
             }
 
             bmpFile.close();
