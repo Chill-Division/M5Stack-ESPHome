@@ -177,7 +177,7 @@ namespace esphome{
                 return;
             }
 
-            static uint8_t buffer[1024];
+            static uint8_t buffer[3072];
             size_t len = 0;
             if (bmpFile.available()) {
                 len = bmpFile.read(buffer, sizeof(buffer));
