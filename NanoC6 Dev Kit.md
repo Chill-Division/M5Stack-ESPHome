@@ -15,8 +15,6 @@ esp32:
   flash_size: 4MB
   framework:
     type: esp-idf
-    version: 5.1.2
-    platform_version: 6.5.0 # Need at least 6.4 for ESP32-C6
     sdkconfig_options:
       CONFIG_ESPTOOLPY_FLASHSIZE_4MB: y
 </pre>
