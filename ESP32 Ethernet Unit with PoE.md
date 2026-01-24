@@ -2,7 +2,9 @@
 
 https://shop.m5stack.com/products/esp32-ethernet-unit-with-poe
 
-This is a generic template needed to make it play nice, without any sensors plugged in. This now works with both the ESP-IDF and the Arduino frameworks, changed since ESPHome 2025.7
+This is a generic template needed to make it play nice, without any sensors plugged in. This now works with both the ESP-IDF and the Arduino frameworks, changed since ESPHome 2025.7.
+
+Be sure to remove the "wifi:" and "captive_portal:" from the defaults too.
 
 It'll then use Pins G16 / G17 for the Grove connector
 
@@ -13,7 +15,7 @@ esphome:
 esp32:
   board: m5stack-core-esp32
   framework:
-    type: arduino
+    type: esp-idf
 
 # Enable logging
 logger:
