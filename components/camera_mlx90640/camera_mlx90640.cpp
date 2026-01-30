@@ -165,12 +165,30 @@ namespace esphome{
                 }
 
                 
-                this->base_->get_server()->on("/thermal-camera", HTTP_GET, [](AsyncWebServerRequest *request){
-                    ESP_LOGI(TAG, "Sending the image");
-                    request->send(SPIFFS, "/thermal.bmp", "image/bmp", false);
-                });
-
+                // Register as a handler for the web server
+                this->base_->add_handler(this);
         }
+
+        void MLX90640::handleRequest(AsyncWebServerRequest *req) {
+            File bmpFile = SPIFFS.open(ESPHOME_F("/thermal.bmp"), ESPHOME_F("r"));
+            if (!bmpFile) {
+                ESP_LOGE("thermal_bmp", "File not found: /thermal.bmp");
+                req->send(404, ESPHOME_F("text/plain"), ESPHOME_F("File not found"));
+                return;
+            }
+
+            static uint8_t buffer[3072];
+            size_t len = 0;
+            if (bmpFile.available()) {
+                len = bmpFile.read(buffer, sizeof(buffer));
+            }
+            AsyncWebServerResponse *response = req->beginResponse(200, ESPHOME_F("image/bmp"), buffer, len);
+            response->addHeader(ESPHOME_F("Content-Disposition"), ESPHOME_F("inline; filename=thermal.bmp"));
+
+            bmpFile.close();
+            req->send(response);
+        }
+
         void MLX90640::filter_outlier_pixel(float *pixels_ , int pixel_size , float level){
             for(int i=1 ; i<pixel_size -1 ; i++){
                 if(abs(pixels_[i]-pixels_[i-1])>= level && abs((pixels_[i]-pixels_[i+1]))>= level ){
