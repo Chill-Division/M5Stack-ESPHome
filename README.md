@@ -4,7 +4,7 @@ Collection of information for getting M5Stack sensors / controllers working with
 If you're on mobile, tap "view code" above to see the files containing example yaml for ESPHome based on the name on the M5Stack webaite
 
 These vary between the PoESP32 and the Atom Lite. Take note before copy / pasting:
-| Color  | Atom Lite / Echo | Atom Lite S3 / Nano C6 | PoESP32 | PoECam / PoECam-W | VoicePE | PoE-P4 |
+| Color  | Atom Lite / Echo | Atom Lite S3 / Nano C6 / Nano H2 | PoESP32 | PoECam / PoECam-W | VoicePE | PoE-P4 |
 | ------------- | ------------- | ------------- | ------------- | ------------- | ------------- | ------------- |
 | Yellow  | sda: 26  |  sda: 2  | sda: 16  | sda: 25 | sda: 1 | sda: 53 |
 | White  | scl: 32  | scl: 1  | scl: 17 | scl: 33 | scl: 2 | scl: 54 |
