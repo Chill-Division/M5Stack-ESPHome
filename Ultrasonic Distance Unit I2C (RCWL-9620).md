@@ -47,7 +47,7 @@ sensor:
    icon: "mdi:waves"
    update_interval: 10s # Or whatever update interval you prefer
    lambda: |-
-    auto x = id(ultrasonic_gr1_res).state;
+    auto x = id(ultrasonic1).state;
     const float min_distance = 190.0;
     const float max_distance = 880.0;
     if (isnan(x)) {
