@@ -41,6 +41,7 @@ sensor:
     update_interval: 10s
     unit_of_measurement: kPa
     accuracy_decimals: 2
+    state_class: measurement
     filters:
       - filter_out: nan
 </pre>
