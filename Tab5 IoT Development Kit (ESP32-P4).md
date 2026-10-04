@@ -169,13 +169,21 @@ No touch controller is configured above, so the panel is output-only as written.
 
 ---
 
+### Touch dashboard with Home Assistant history
+
+For a ready-made touch dashboard, see [tab5-grow-dashboard](https://github.com/Chill-Division/tab5-grow-dashboard): two swipeable LVGL screens of Home Assistant values (VPD, CO2, temperature and humidity; substrate temperature, VWC and bulk EC), each with a 6-hour chart and a target band. The charts are filled from Home Assistant's statistics at boot, so they don't start empty after a reboot. It installs as an ESPHome remote package, so your device YAML only holds your entities, target ranges and secrets. Needs ESPHome 2026.8 or newer and an ST7121 or ST7123 panel.
+
+![Tab5 grow dashboard](https://raw.githubusercontent.com/Chill-Division/tab5-grow-dashboard/main/images/climate.png)
+
+---
+
 ### Optional: sparkline dashboard
 
-LVGL's chart widget is compiled out of ESPHome 2026.4+, so anything graph-like has to be drawn in a display lambda. That turns out to be no bad thing: drawing per-pixel columns gives a gradient area fill the LVGL chart can't produce.
+LVGL's chart widget is left out of ESPHome builds from 2026.4 onwards. Since 2026.5 you can bring it back by adding <code>-DLV_USE_CHART=1</code> under <code>esphome: platformio_options: build_flags:</code>, but this example draws in a display lambda instead. That turns out to be no bad thing: drawing per-pixel columns gives a gradient area fill the LVGL chart can't produce.
 
 This example pulls six values from Home Assistant and draws each as a filled sparkline card, with an optional "healthy" reference band. Swap the <code>entity_id:</code> values for your own.
 
-History is sampled on-device into ring buffers and is lost on reboot; Home Assistant's long-term history can't be pulled onto the device. 160 points at 30s is about 80 minutes per card.
+History is sampled on-device into ring buffers and is lost on reboot. To start with history instead, the device can fetch it from Home Assistant's statistics with <code>recorder.get_statistics</code>, as tab5-grow-dashboard above does. 160 points at 30s is about 80 minutes per card.
 
 Add to the config above:
 
