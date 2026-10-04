@@ -169,6 +169,14 @@ No touch controller is configured above, so the panel is output-only as written.
 
 ---
 
+### Touch dashboard with Home Assistant history
+
+For a ready-made touch dashboard, see [tab5-grow-dashboard](https://github.com/Chill-Division/tab5-grow-dashboard): two swipeable LVGL screens of Home Assistant values (VPD, CO2, temperature and humidity; substrate temperature, VWC and bulk EC), each with a 6-hour chart and a target band. The charts are filled from Home Assistant's statistics at boot, so they don't start empty after a reboot. It installs as an ESPHome remote package, so your device YAML only holds your entities, target ranges and secrets. Needs ESPHome 2026.8 or newer and an ST7121 or ST7123 panel.
+
+![Tab5 grow dashboard](https://raw.githubusercontent.com/Chill-Division/tab5-grow-dashboard/main/images/climate.png)
+
+---
+
 ### Optional: sparkline dashboard
 
 LVGL's chart widget is compiled out of ESPHome 2026.4+, so anything graph-like has to be drawn in a display lambda. That turns out to be no bad thing: drawing per-pixel columns gives a gradient area fill the LVGL chart can't produce.
