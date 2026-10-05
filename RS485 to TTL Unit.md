@@ -5,12 +5,13 @@ https://shop.m5stack.com/products/rs485-module
 This example includes sensor details for a [THC-S Soil Moisture, Temperature and Conductivity Sensor](https://www.aliexpress.com/item/1005001524845572.html?spm=a2g0o.order_list.order_list_main.5.6a5e1802E8jtxz) as a demonstration of how to connect the device
 
 <pre>
+
 # Setup the UART bus for RS485
 uart:
   id: uart_bus
-  tx_pin: 16 # < for PoESP32 ... #26  # Standard M5Stack Atom Grove Pin
-  rx_pin: 17 # < for PoESP32 ... #32  # Standard M5Stack Atom Grove Pin
-  baud_rate: 4800 # Default per THC-S manual 
+  tx_pin: 53
+  rx_pin: 54
+  baud_rate: 4800 # THC-S default
   stop_bits: 1
 
 # Configure Modbus
@@ -20,29 +21,60 @@ modbus:
 
 modbus_controller:
   - id: substrate_probe
-    address: 0x01 # Default Device Address is 1
+    address: ${modbus_address}
     modbus_id: modbus_hub
     setup_priority: -10
-    update_interval: 10s
+    update_interval: ${poll_interval}
+    on_online:
+      - logger.log: "Substrate probe is responding on Modbus"
+    on_offline:
+      - logger.log:
+          level: WARN
+          format: "Substrate probe stopped responding on Modbus"
+
+number:
+  # Register 0x0022, "Conductivity factor": 0-100 = 0.0-10.0 %/°C (probe default 0).
+  # Set at every boot from ec_temp_coeff above; shown here so you can see and adjust it.
+  - platform: modbus_controller
+    modbus_controller_id: substrate_probe
+    name: "Substrate EC Temp Coefficient"
+    id: substrate_ec_temp_coeff
+    address: 0x0022
+    register_type: holding
+    value_type: U_WORD
+    multiply: 10          # 2.0 %/°C <-> register value 20
+    min_value: 0
+    max_value: 10
+    step: 0.1
+    unit_of_measurement: "%/°C"
+    entity_category: config
 
 sensor:
-  # Humidity
-  # Register: 0x0000 | Unit: 0.1%RH 
+  # Moisture. The THC-S calls it "Humidity" (0.1 % steps). It is the probe's own soil
+  # scale, not true moisture in coco, until calibrated below.
+  # Keep this name: it is what keeps the Home Assistant entity id.
   - platform: modbus_controller
     modbus_controller_id: substrate_probe
     name: "Substrate Humidity"
     id: substrate_humidity
     address: 0x0000
-    register_type: read
+    register_type: read   # input registers (function 0x04), as this device already reads them
     value_type: U_WORD
     unit_of_measurement: "%"
+    device_class: moisture
+    state_class: measurement
     accuracy_decimals: 1
     filters:
       - multiply: 0.1
+      # Coco calibration goes here once measured: probe reading -> true moisture.
+      # MADE-UP NUMBERS: replace them with yours before uncommenting.
+      # - calibrate_linear:
+      #     method: least_squares
+      #     datapoints:
+      #       - 87.0 -> 60.0   # drained
+      #       - 70.0 -> 42.0   # dried back
 
-  # Temperature
-  # Register: 0x0001 | Unit: 0.1°C 
-  # Note: Manual states negative values use complement, so we use S_WORD (Signed) 
+  # Temperature, 0.1 °C steps. Below 0 °C the probe sends two's complement, hence S_WORD.
   - platform: modbus_controller
     modbus_controller_id: substrate_probe
     name: "Substrate Temperature"
@@ -51,12 +83,13 @@ sensor:
     register_type: read
     value_type: S_WORD
     unit_of_measurement: "°C"
+    device_class: temperature
+    state_class: measurement
     accuracy_decimals: 1
     filters:
       - multiply: 0.1
 
-  # Electrical Conductivity (EC)
-  # Register: 0x0002 | Unit: 1 us/cm 
+  # Bulk EC as the probe reports it, 1 µS/cm steps.
   - platform: modbus_controller
     modbus_controller_id: substrate_probe
     name: "Substrate Conductivity"
@@ -65,40 +98,52 @@ sensor:
     register_type: read
     value_type: U_WORD
     unit_of_measurement: "µS/cm"
+    state_class: measurement
     accuracy_decimals: 0
-    # No multiplier needed as manual says "0-20000us/cm" with value 1 = 1
 
-# The THC-S sensor reads Bulk EC (the conductivity of the soil + water + air mix).
-# If you are trying to measure the exact nutrient levels available to the plant roots (Pore Water EC),
-# the number will naturally appear lower than what you might see in a hydroponic reservoir tester.
-# We derive the Bulk EC from the Conductivity value
+  # Bulk EC in mS/cm: Substrate Conductivity ÷ 1000.
+  # (It used to be labelled ppm500, but the value was always mS/cm.)
   - platform: template
     name: "Substrate Bulk EC"
-    id: substrate_bulkec_ppm500
-    unit_of_measurement: "ppm500" # Standard unit for "EC"
-    accuracy_decimals: 2         # e.g., will show 1.50 mS/cm
+    id: substrate_bulk_ec
+    unit_of_measurement: "mS/cm"
+    state_class: measurement
+    accuracy_decimals: 2
+    update_interval: ${poll_interval}
     lambda: |-
-      if (id(substrate_conductivity).state == NAN) return NAN;
-      return id(substrate_conductivity).state / 1000.0;
+      const float ec_us = id(substrate_conductivity).state;
+      if (std::isnan(ec_us)) return NAN;
+      return ec_us / 1000.0f;
 
-# The THC-S sensor measures Bulk EC (the conductivity of the entire soil + water + air matrix).
-# get Pore Water EC (the conductivity of just the water available to the roots),
-# you normally need a more advanced calculation (like the Hilhorst equation) which requires the Dielectric Permittivity (epsilon) of the soil.
-# However we can estimate it using pwEC = BulkEC / Moisture
+  # Estimated pore-water EC in mS/cm: bulk EC ÷ moisture. A rough estimate (a proper
+  # one needs permittivity, which this probe doesn't report), so read it as a trend.
+  # It uses the moisture above, so it improves once that is calibrated.
   - platform: template
     name: "Substrate Estimated pwEC"
     id: estimated_pwec
-    unit_of_measurement: "ppm500"
+    unit_of_measurement: "mS/cm"
+    state_class: measurement
     accuracy_decimals: 2
+    update_interval: ${poll_interval}
     lambda: |-
-      // Prevent division by zero
-      if (id(substrate_humidity).state <= 0.1) return 0.0;
-      
-      // Convert humidity (e.g. 45%) to decimal (0.45)
-      float vwc = id(substrate_humidity).state / 100.0;
-      
-      // Get Bulk EC in mS/cm (using your converted sensor)
-      float bulk_ec = id(substrate_bulkec_ppm500).state;
+      const float ec_us = id(substrate_conductivity).state;
+      const float vwc_pct = id(substrate_humidity).state;
+      if (std::isnan(ec_us) || std::isnan(vwc_pct)) return NAN;
+      // Below ~5 % moisture the ratio means nothing: report unknown, never 0.
+      if (vwc_pct < 5.0f) return NAN;
+      return (ec_us / 1000.0f) / (vwc_pct / 100.0f);
 
-      // Simple pore water approximation
-      return bulk_ec / vwc;</pre>
+  # The same estimate on the ppm500 scale, to compare with a runoff or reservoir
+  # TDS meter set to 500. Not for Crop Steering, which reads mS/cm.
+  - platform: template
+    name: "Substrate Estimated pwEC (ppm500)"
+    id: estimated_pwec_ppm500
+    unit_of_measurement: "ppm"
+    state_class: measurement
+    accuracy_decimals: 0
+    update_interval: ${poll_interval}
+    lambda: |-
+      const float pwec = id(estimated_pwec).state;
+      if (std::isnan(pwec)) return NAN;
+      return pwec * 500.0f;
+</pre>
