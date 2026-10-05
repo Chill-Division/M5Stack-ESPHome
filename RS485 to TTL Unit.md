@@ -15,7 +15,6 @@ substitutions:
   poll_interval: "10s"
   # EC temperature compensation in %/°C, written to the probe at every boot.
   # The THC-S ships at 0.0 (off); 2.0 is the usual value for nutrient solutions.
-  # Use the same value as GT4. "0.0" keeps today's uncompensated readings.
   ec_temp_coeff: "2.0"
 
 # Setup the UART bus for RS485
