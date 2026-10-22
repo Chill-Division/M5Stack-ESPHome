@@ -4,6 +4,10 @@ https://shop.m5stack.com/products/air-quality-kit-v1-1-with-m5stamps3a-sen55-scd
 
 Also known as the AirQ V1.1 (K131-V11). This is a complete config: the SEN55 (PM1.0, PM2.5, PM4.0, PM10, VOC, NOx, temperature and humidity), the SCD40 (CO2), the e-ink screen, both buttons, the buzzer, the RTC and the battery level.
 
+![AirQ V1.1 e-ink screens: overview, all readings and status](images/air-quality-kit-v1.1-screens.png)
+
+The three screens with typical readings: overview, all readings and status. This is a render of the config's own fonts and layout rather than a photo, so the real panel may look slightly different.
+
 <b>NOTE:</b> Needs ESPHome 2026.9 or newer. It expects <code>wifi_ssid</code>, <code>wifi_password</code> and <code>api_encryption_key</code> in your <code>secrets.yaml</code>. If you created the device in the ESPHome dashboard, you can paste the encryption key it generated in place of the <code>!secret</code>.
 
 For the first flash over USB: turn the AirQ off, hold Button A (G0) while you plug in the USB cable, then let go once it's powered.
